@@ -169,8 +169,10 @@ def main():
 
 	f = 0
 	try:
-		for color in colors:
-			setColor(color)
+		while True:
+			for col in colors:
+				setColor(col)
+				time.sleep(1.0)
 	except:
 		p_R.stop()
 		p_G.stop()
