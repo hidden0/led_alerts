@@ -47,6 +47,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 def main():
 	try:
 		while True:
+			setColor(colors[4])
 			"""Shows basic usage of the Gmail API.
 			Lists the user's Gmail labels.
 			"""
