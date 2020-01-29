@@ -154,10 +154,16 @@ def main():
 			# Check unacked escalations
 			if unacked > 0:
 				setColor(colors[0])
+				print("Red")
 			elif len(personal) > 0:
 				setColor(colors[1])
+				print("Green")
 			elif len(personal_me) > 0:
 				setColor(colors[2])
+				print("Blue")
+			else:
+				setColor(colors[6])
+				print("White")
 			time.sleep(60.0)
 	except:
 		p_R.stop()
