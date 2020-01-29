@@ -172,6 +172,7 @@ def main():
 		while True:
 			for col in colors:
 				setColor(col)
+				print(col)
 				time.sleep(1.0)
 	except:
 		p_R.stop()
