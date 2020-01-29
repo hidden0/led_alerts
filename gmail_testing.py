@@ -4,6 +4,7 @@ import pickle
 import os.path
 import datetime
 import time
+import re
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -39,18 +40,37 @@ def main():
 
 	# Date setup
 
-	aDate = str(int(time.time())-(60*60*4))
+	aDateStr = str(int(time.time())-(60*60*4))
 
 	# Call the Gmail API
 	# Get unread emails to escalations with 0 replies
 	results = service.users().messages().list(userId='me',q='after:'+aDateStr+' in:escalation').execute()
 	emails = results.get('messages', [])
 
+	threads = {}
+
 	if not emails:
 		print('No emails found.')
 	else:
 		print('Emails:')
+		y = 0
 		for mail in emails:
+			threads[y] = { 'emailId':mail['id'], 'threadId':mail['threadId'], 'acked': False }
+			y+=1
+			# Find a unique thread id
+			x = 0
+			match = 0
+			found = False
+			while x < len(emails):
+				#print("Checking " + str(mail['threadId']) + " against " + str(emails[x]['threadId']))
+				if str(mail['threadId']) == str(emails[x]['threadId']):
+					print("==MATCH==")
+					match+=1
+				if match >= 2:
+					print (str(mail['threadId']) + " is ACKed")
+					match = 0
+					break
+				x+=1
 			print(mail)
 
 if __name__ == '__main__':

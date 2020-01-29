@@ -38,9 +38,8 @@ def setColor(col):   # For example : col = 0x112233
 	p_B.ChangeDutyCycle(100-B_val)
 
 try:
-	while True:
-		setColor(colors[colorTest])
-		time.sleep(1.0)
+	setColor(colors[colorTest])
+	time.sleep(1.0)
 except KeyboardInterrupt:
 	p_R.stop()
 	p_G.stop()
