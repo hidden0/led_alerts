@@ -45,61 +45,75 @@ def setColor(col):   # For example : col = 0x112233
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 def main():
-	try:
-		while True:
-			print("Checking...")
-			"""Shows basic usage of the Gmail API.
-			Lists the user's Gmail labels.
-			"""
-			os.chdir("/home/pi")
-			creds = None
-			# The file token.pickle stores the user's access and refresh tokens, and is
-			# created automatically when the authorization flow completes for the first
-			# time.
-			if os.path.exists('token.pickle'):
-				with open('token.pickle', 'rb') as token:
-					creds = pickle.load(token)
-			# If there are no (valid) credentials available, let the user log in.
-			if not creds or not creds.valid:
-				if creds and creds.expired and creds.refresh_token:
-					creds.refresh(Request())
-				else:
-					flow = InstalledAppFlow.from_client_secrets_file(
-						'credentials.json', SCOPES)
-					creds = flow.run_local_server(port=0)
-				# Save the credentials for the next run
-				with open('token.pickle', 'wb') as token:
-					pickle.dump(creds, token)
-
-			service = build('gmail', 'v1', credentials=creds)
-
-			aDateStr = str(int(time.time())-(60*60*4))
-			# Call the Gmail API
-			# Get unread emails to escalations with 0 replies
-			unread_escalations = service.users().messages().list(userId='me',q='after:'+aDateStr+' in:escalation').execute()
-			newFromNeha = service.users().messages().list(userId='me',q='from:neha.maid@meraki.net is:unread').execute()
-			new_to_me = service.users().messages().list(userId='me',q='in:new-to-me is:unread').execute()
-			#unread_escalations = service.users().messages().list(userId='me',q='subject:mootzig').execute()
-			#results = service.users().labels().list(userId='me').execute()
-			threads = unread_escalations.get('messages', [])
-			personal = newFromNeha.get('messages', [])
-			personal_me = new_to_me.get('messages', [])
-
-			# LOGIC: Every email in the return results has a Thread ID. If there are any detected Thread IDs with ONE and ONLY ONE child, it is a new escalation!
-
-			unacked = 0
-			if not threads:
-				print('No emails found.')
+	while True:
+		"""Shows basic usage of the Gmail API.
+		Lists the user's Gmail labels.
+		"""
+		creds = None
+		emails = None
+		# The file token.pickle stores the user's access and refresh tokens, and is
+		# created automatically when the authorization flow completes for the first
+		# time.
+		if os.path.exists('token.pickle'):
+			with open('token.pickle', 'rb') as token:
+				creds = pickle.load(token)
+		# If there are no (valid) credentials available, let the user log in.
+		if not creds or not creds.valid:
+			if creds and creds.expired and creds.refresh_token:
+				creds.refresh(Request())
 			else:
-				unique_threads = []
-				parent_threads = []
-				escalations = {}
+				flow = InstalledAppFlow.from_client_secrets_file(
+					'credentials.json', SCOPES)
+				creds = flow.run_local_server(port=0)
+			# Save the credentials for the next run
+			with open('token.pickle', 'wb') as token:
+				pickle.dump(creds, token)
+
+		service = build('gmail', 'v1', credentials=creds)
+
+		# Date setup
+
+		aDateStr = str(int(time.time())-(60*60*4))
+
+		# Call the Gmail API
+		# Get unread emails to escalations with 0 replies
+		results = service.users().messages().list(userId='me',q='after:'+aDateStr+' in:escalation').execute()
+		emails = results.get('messages', [])
+
+		threads = {}
+
+		if not emails:
+			print('No emails found.')
+		else:
+			print('Emails:')
+			y = 0
+			for mail in emails:
+				threads[y] = { 'emailId':mail['id'], 'threadId':mail['threadId'], 'acked': False, 'subject': 'none', 'case': '0', 'parent':False }
+				# Find a unique thread id
 				x = 0
-				for email in threads:
-					emailData = service.users().messages().get(userId='me',id=email['id'],format='metadata').execute()
-					#emailSubject = emailData['payload']['headers'][42]['value']
-					#print(emailData)
-					emailSubject = "None"
+				match = 0
+				found = False
+				while x < len(emails):
+					#print("Checking " + str(mail['threadId']) + " against " + str(emails[x]['threadId']))
+					if str(mail['threadId']) == str(emails[x]['threadId']):
+						print("==MATCH==")
+						match+=1
+					if match >= 2:
+						print (str(mail['threadId']) + " is ACKed")
+						threads[y]['acked']=True
+						match = 0
+						break
+					x+=1
+				y+=1
+
+			# We have a trimmed list to look at now
+			y=0
+			while y < len(threads):
+				caseNumber = "0"
+				emailSubject = "None"
+				if threads[y]['acked']==False:
+					# Do some more checking
+					emailData = service.users().messages().get(userId='me',id=threads[y]['emailId'],format='metadata').execute()
 					for header in emailData['payload']['headers']:
 						#print(header['name'] + " - " + header['value'])
 						if header['name']=="Subject":
@@ -110,56 +124,30 @@ def main():
 					else:
 						caseNumber = caseNumber.group(0).lower()
 					if emailSubject.lower()[0:4]!="re: ":
-						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':False, 'parent':True}
+						threads[y] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':False, 'parent':True}
 						#print(escalations[x])
 					else:
-						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':True, 'parent':False}
+						threads[y] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':True, 'parent':False}
 					#print(escalations[x])
-					x+=1
-				# For each parent, find a child thread
-				x = 0
-				y = 0
-				while x < len(escalations):
-					print(escalations[x])
-					if escalations[x]['parent']==True and escalations[x]['acked']==False:
-						while y < len(escalations):
-							print ("Checking case " + escalations[x]['case'] + " against " + escalations[y]['case'])
-							# We'll only enter this loop if the subject is the start of a thread
-							# Thus, these are all reply chains. If the case number here matches a parent, it's acked
-							if escalations[y]['parent']==False and escalations[y]['case']==escalations[x]['case']:
-								escalations[x]['acked']=True
-								print("Found an unread parent thread with a reply...")
-							y+=1
-					x+=1
-				# Show un'ACKED escalations
-				#print("--------------------------------------")
-				x = 0
-				while x < len(escalations):
-					if(escalations[x]['acked']==False):
-						unacked+=1
-						print(escalations[x])
-					x+=1
+				y+=1
+
+			# Dump array
+			y=0
+			unacked = 0
+			while y < len(threads):
+				print(threads[y])
+				if threads[y]['acked']==False:
+					unacked+=1
+				y+=1
 
 			# Check unacked escalations
 			if unacked > 0:
 				setColor(colors[0])
 				print("Red")
-			elif len(personal) > 0:
-				setColor(colors[2])
-				print("Blue")
-			elif len(personal_me) > 0:
-				setColor(colors[1])
-				print("Green")
 			else:
 				setColor(colors[6])
 				print("White")
-			time.sleep(60.0)
-	except:
-		p_R.stop()
-		p_G.stop()
-		p_B.stop()
-		for i in pins:
-			GPIO.output(pins[i], GPIO.HIGH)	# Turn off all leds
-		GPIO.cleanup()
+			time.sleep(10.0)
+
 if __name__ == '__main__':
 	main()
