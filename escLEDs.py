@@ -11,7 +11,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xFFFFFF, 0x9400D3]
-pins = {'pin_R':12, 'pin_G':21, 'pin_B':19}  # pins is a dict
+pins = {'pin_R':12, 'pin_G':19, 'pin_B':21}  # pins is a dict
 
 GPIO.setmode(GPIO.BCM)	   # Numbers GPIOs by physical location
 for i in pins:
