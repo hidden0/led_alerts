@@ -169,10 +169,8 @@ def main():
 
 	f = 0
 	try:
-		while f < 5:
-			if unacked > 0:
-				setColor(colors[0])
-			f+=1
+		for color in colors:
+			setColor(color)
 	except:
 		p_R.stop()
 		p_G.stop()
