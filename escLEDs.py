@@ -73,15 +73,10 @@ def main():
 
 			service = build('gmail', 'v1', credentials=creds)
 
-			# Date setup
-			aDate = datetime.datetime.now()
-			bDate = aDate + datetime.timedelta(days=1)
-
-			aDateStr = str(aDate.year)+"/"+str(aDate.month)+"/"+str(aDate.day)
-			bDateStr = str(bDate.year)+"/"+str(bDate.month)+"/"+str(bDate.day)
+			aDateStr = str(int(time.time())-(60*60*4))
 			# Call the Gmail API
 			# Get unread emails to escalations with 0 replies
-			unread_escalations = service.users().messages().list(userId='me',q='after:'+aDateStr+' before:'+bDateStr+' in:escalation').execute()
+			unread_escalations = service.users().messages().list(userId='me',q='after:'+aDateStr+' in:escalation').execute()
 			newFromNeha = service.users().messages().list(userId='me',q='from:neha.maid@meraki.net is:unread').execute()
 			new_to_me = service.users().messages().list(userId='me',q='in:new-to-me is:unread').execute()
 			#unread_escalations = service.users().messages().list(userId='me',q='subject:mootzig').execute()
