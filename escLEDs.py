@@ -111,7 +111,7 @@ def main():
 						caseNumber = caseNumber.group(0).lower()
 					if emailSubject.lower()[0:4]!="re: ":
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':False, 'parent':True}
-						print(escalations[x])
+						#print(escalations[x])
 					else:
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':True, 'parent':False}
 					#print(escalations[x])
@@ -120,6 +120,7 @@ def main():
 				x = 0
 				y = 0
 				while x < len(escalations):
+					print(escalations[x])
 					if escalations[x]['parent']==True and escalations[x]['acked']==False:
 						while y < len(escalations):
 							print ("Checking case " + escalations[x]['case'] + " against " + escalations[y]['case'])
