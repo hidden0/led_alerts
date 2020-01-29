@@ -37,8 +37,7 @@ def setColor(col):   # For example : col = 0x112233
 
 try:
 	while True:
-		for col in colors:
-			setColor(col)
+		setColor(colors[1])
 			time.sleep(1.0)
 except KeyboardInterrupt:
 	p_R.stop()
