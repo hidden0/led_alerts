@@ -148,12 +148,12 @@ def main():
 			if unacked > 0:
 				setColor(colors[0])
 				print("Red")
-			elif len(personal_me) > 0:
-				setColor(colors[1])
-				print("Green")
 			elif len(personal) > 0:
 				setColor(colors[2])
 				print("Blue")
+			elif len(personal_me) > 0:
+				setColor(colors[1])
+				print("Green")
 			else:
 				setColor(colors[6])
 				print("White")
