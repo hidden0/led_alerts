@@ -118,7 +118,7 @@ def main():
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':False, 'parent':True}
 					else:
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':True, 'parent':False}
-					#print(escalations[x])
+					print(escalations[x])
 					x+=1
 				# For each parent, find a child thread
 				x = 0
