@@ -147,33 +147,10 @@ def main():
 				unacked+=1
 				print(escalations[x])
 			x+=1
-	# How many escalations are there?
-	x = 0
-	while x < unacked:
-		time.sleep(1)
-		GPIO.output(6,GPIO.HIGH)
-		time.sleep(1)
-		GPIO.output(6,GPIO.LOW)
-		x+=1
-	if unacked > 0:
-		time.sleep(3)
-		GPIO.output(6,GPIO.HIGH)
-	if len(personal) > 0:
-		GPIO.output(12,GPIO.HIGH)
-	else:
-		GPIO.output(12,GPIO.LOW)
-	if len(personal_me) > 0:
-		GPIO.output(23,GPIO.HIGH)
-	else:
-		GPIO.output(23,GPIO.LOW)
-
-	f = 0
 	try:
 		while True:
-			for col in colors:
-				setColor(col)
-				print(col)
-				time.sleep(1.0)
+			setColor(colors[0])
+			time.sleep(60.0)
 	except:
 		p_R.stop()
 		p_G.stop()
