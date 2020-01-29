@@ -111,6 +111,7 @@ def main():
 						caseNumber = caseNumber.group(0).lower()
 					if emailSubject.lower()[0:4]!="re: ":
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':False, 'parent':True}
+						print(escalations[x])
 					else:
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':True, 'parent':False}
 					#print(escalations[x])
