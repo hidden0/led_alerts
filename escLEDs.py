@@ -47,6 +47,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 def main():
 	try:
 		while True:
+			print("Checking...")
 			setColor(colors[4])
 			"""Shows basic usage of the Gmail API.
 			Lists the user's Gmail labels.
@@ -91,14 +92,6 @@ def main():
 			personal_me = new_to_me.get('messages', [])
 
 			# LOGIC: Every email in the return results has a Thread ID. If there are any detected Thread IDs with ONE and ONLY ONE child, it is a new escalation!
-			GPIO.setmode(GPIO.BCM)
-			GPIO.setwarnings(False)
-			GPIO.setup(6,GPIO.OUT)
-			GPIO.output(6,GPIO.LOW)
-			GPIO.setup(12,GPIO.OUT)
-			GPIO.output(12,GPIO.LOW)
-			GPIO.setup(23,GPIO.OUT)
-			GPIO.output(23,GPIO.LOW)
 
 			unacked = 0
 			if not threads:
