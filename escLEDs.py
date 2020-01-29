@@ -154,9 +154,9 @@ def main():
 			# Check unacked escalations
 			if unacked > 0:
 				setColor(colors[0])
-			else if len(personal) > 0:
+			elif len(personal) > 0:
 				setColor(colors[1])
-			else if len(personal_me) > 0:
+			elif len(personal_me) > 0:
 				setColor(colors[2])
 			time.sleep(60.0)
 	except:
