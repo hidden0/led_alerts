@@ -2,6 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 
+colorTest = sys.argv[2]
 colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xFFFFFF, 0x9400D3]
 pins = {'pin_R':12, 'pin_G':21, 'pin_B':19}  # pins is a dict
 
@@ -37,8 +38,8 @@ def setColor(col):   # For example : col = 0x112233
 
 try:
 	while True:
-		setColor(colors[1])
-			time.sleep(1.0)
+		setColor(colors[colorTest])
+		time.sleep(1.0)
 except KeyboardInterrupt:
 	p_R.stop()
 	p_G.stop()
