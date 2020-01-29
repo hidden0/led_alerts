@@ -113,7 +113,7 @@ def main():
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':False, 'parent':True}
 					else:
 						escalations[x] = {'subject': emailSubject.lower(), 'case':caseNumber, 'acked':True, 'parent':False}
-					print(escalations[x])
+					#print(escalations[x])
 					x+=1
 				# For each parent, find a child thread
 				x = 0
@@ -121,11 +121,12 @@ def main():
 				while x < len(escalations):
 					if escalations[x]['parent']==True and escalations[x]['acked']==False:
 						while y < len(escalations):
+							print ("Checking case " + escalations[x]['case'] + " against " + escalations[y]['case'])
 							# We'll only enter this loop if the subject is the start of a thread
 							# Thus, these are all reply chains. If the case number here matches a parent, it's acked
 							if escalations[y]['parent']==False and escalations[y]['case']==escalations[x]['case']:
 								escalations[x]['acked']=True
-								#print("Found an unread parent thread with a reply...")
+								print("Found an unread parent thread with a reply...")
 								break
 							y+=1
 					x+=1
