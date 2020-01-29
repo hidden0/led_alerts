@@ -48,7 +48,6 @@ def main():
 	try:
 		while True:
 			print("Checking...")
-			setColor(colors[3])
 			"""Shows basic usage of the Gmail API.
 			Lists the user's Gmail labels.
 			"""
