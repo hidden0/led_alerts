@@ -128,7 +128,6 @@ def main():
 							if escalations[y]['parent']==False and escalations[y]['case']==escalations[x]['case']:
 								escalations[x]['acked']=True
 								print("Found an unread parent thread with a reply...")
-								break
 							y+=1
 					x+=1
 				# Show un'ACKED escalations
