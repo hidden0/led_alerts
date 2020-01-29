@@ -96,10 +96,10 @@ def main():
 				while x < len(emails):
 					#print("Checking " + str(mail['threadId']) + " against " + str(emails[x]['threadId']))
 					if str(mail['threadId']) == str(emails[x]['threadId']):
-						print("==MATCH==")
+						#print("==MATCH==")
 						match+=1
 					if match >= 2:
-						print (str(mail['threadId']) + " is ACKed")
+						#print (str(mail['threadId']) + " is ACKed")
 						threads[y]['acked']=True
 						match = 0
 						break
@@ -135,7 +135,7 @@ def main():
 			y=0
 			unacked = 0
 			while y < len(threads):
-				print(threads[y])
+				#print(threads[y])
 				if threads[y]['acked']==False:
 					unacked+=1
 				y+=1
