@@ -45,8 +45,6 @@ def setColor(col):   # For example : col = 0x112233
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
-lights = { 'escalation': False, 'personal': False, 'neha': False }
-
 def main():
 	while True:
 		"""Shows basic usage of the Gmail API.
@@ -54,6 +52,7 @@ def main():
 		"""
 		creds = None
 		emails = None
+		lights = { 'escalation': False, 'personal': False, 'neha': False }
 		# The file token.pickle stores the user's access and refresh tokens, and is
 		# created automatically when the authorization flow completes for the first
 		# time.
@@ -167,7 +166,6 @@ def main():
 			if lights['escalation']==True:
 				setColor(colors['red'])
 				time.sleep(1)
-			lights = { 'escalation': False, 'personal': False, 'neha': False }
 			time.sleep(10.0)
 
 if __name__ == '__main__':
