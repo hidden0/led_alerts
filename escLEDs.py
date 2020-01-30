@@ -11,7 +11,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xFFFFFF, 0x9400D3]
+colors = { 'red':0xFF0000, 'green':0x00FF00, 'blue':0x0000FF, 'yellow':0xFFFF00, 'teal':0x00FFFF, 'purple':0xFF00FF, 'white':0xFFFFFF, 'navy':0x9400D3 }
 pins = {'pin_R':12, 'pin_G':19, 'pin_B':21}  # pins is a dict
 
 GPIO.setmode(GPIO.BCM)	   # Numbers GPIOs by physical location
@@ -44,6 +44,8 @@ def setColor(col):   # For example : col = 0x112233
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+
+lights = { 'escalation': False, 'personal': False, 'neha': False }
 
 def main():
 	while True:
@@ -147,15 +149,25 @@ def main():
 
 			# Check unacked escalations
 			if unacked > 0:
-				setColor(colors[0])
-				print(str(int(time.time())) + " Red")
+				lights {'escalation':True}
 			elif len(emailsP) > 0:
-				setColor(colors[1])
+				lights {'personal':True}
 			elif len(emailsN) > 0:
-				setColor(colors[2])
+				slights {'neha':True}
 			else:
-				setColor(colors[6])
-				print(str(int(time.time())) + " White")
+				lights = { 'escalation': False, 'personal': False, 'neha': False }
+
+			# Set lighting accordingly
+			if lights['personal']==True:
+				setColor(colors['green'])
+				time.sleep(1)
+			if lights['neha']==True:
+				setColor(colors['blue'])
+				time.sleep(1)
+			if lights['escalation']==True:
+				setColor(colors['red'])
+				time.sleep(1)
+			lights = { 'escalation': False, 'personal': False, 'neha': False }
 			time.sleep(10.0)
 
 if __name__ == '__main__':
