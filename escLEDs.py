@@ -79,7 +79,11 @@ def main():
 		# Call the Gmail API
 		# Get unread emails to escalations with 0 replies
 		results = service.users().messages().list(userId='me',q='after:'+aDateStr+' in:escalation').execute()
+		personal_results = service.users().messages().list(userId='me',q='in:new-to-me is:unread').execute()
+		neha_results = service.users().messages().list(userId='me',q='in:new-to-me is:unread from:neha.maid@meraki.net').execute()
 		emails = results.get('messages', [])
+		emailsP = personal_results.get('messages', [])
+		emailsN = neha_results.get('messages', [])
 
 		threads = {}
 
@@ -145,6 +149,10 @@ def main():
 			if unacked > 0:
 				setColor(colors[0])
 				print(str(int(time.time())) + " Red")
+			elif len(emailsP) > 0:
+				setColor(colors[1])
+			elif len(emailsN) > 0:
+				setColor(colors[2])
 			else:
 				setColor(colors[6])
 				print(str(int(time.time())) + " White")
