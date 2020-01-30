@@ -156,18 +156,18 @@ def main():
 			if len(emailsN) > 0:
 				lights['neha']=True
 				print(str(int(time.time())) + " Neha")
-			
+
 			# Set lighting accordingly
 			if lights['personal']==True:
 				setColor(colors['green'])
-				time.sleep(1)
+				time.sleep(3)
 			if lights['neha']==True:
 				setColor(colors['blue'])
-				time.sleep(1)
+				time.sleep(3)
 			if lights['escalation']==True:
 				setColor(colors['red'])
 				time.sleep(1)
-			time.sleep(10.0)
+			time.sleep(5.0)
 
 if __name__ == '__main__':
 	main()
