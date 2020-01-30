@@ -150,15 +150,13 @@ def main():
 			if unacked > 0:
 				lights['escalation']=True
 				print(str(int(time.time())) + " Escalation")
-			elif len(emailsP) > 0:
+			if len(emailsP) > 0:
 				lights['personal']=True
 				print(str(int(time.time())) + " Personal")
-			elif len(emailsN) > 0:
+			if len(emailsN) > 0:
 				lights['neha']=True
 				print(str(int(time.time())) + " Neha")
-			else:
-				lights = { 'escalation': False, 'personal': False, 'neha': False }
-
+			
 			# Set lighting accordingly
 			if lights['personal']==True:
 				setColor(colors['green'])
