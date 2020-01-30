@@ -81,7 +81,7 @@ def main():
 		# Get unread emails to escalations with 0 replies
 		results = service.users().messages().list(userId='me',q='after:'+aDateStr+' in:escalation').execute()
 		personal_results = service.users().messages().list(userId='me',q='in:new-to-me is:unread').execute()
-		neha_results = service.users().messages().list(userId='me',q='in:new-to-me is:unread from:neha.maid@meraki.net').execute()
+		neha_results = service.users().messages().list(userId='me',q='is:unread from:neha.maid@meraki.net').execute()
 		emails = results.get('messages', [])
 		emailsP = personal_results.get('messages', [])
 		emailsN = neha_results.get('messages', [])
