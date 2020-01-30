@@ -149,11 +149,11 @@ def main():
 
 			# Check unacked escalations
 			if unacked > 0:
-				lights {'escalation':True}
+				lights['escalation']=True
 			elif len(emailsP) > 0:
-				lights {'personal':True}
+				lights['personal']=True
 			elif len(emailsN) > 0:
-				slights {'neha':True}
+				lights['neha']=True
 			else:
 				lights = { 'escalation': False, 'personal': False, 'neha': False }
 
