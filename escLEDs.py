@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 import time
 import datetime
 import re
+import threading
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -85,7 +86,7 @@ def main():
 		if not emails:
 			print('No emails found.')
 		else:
-			print('Emails:')
+			#print('Emails:')
 			y = 0
 			for mail in emails:
 				threads[y] = { 'emailId':mail['id'], 'threadId':mail['threadId'], 'acked': False, 'subject': 'none', 'case': '0', 'parent':False }
@@ -143,10 +144,10 @@ def main():
 			# Check unacked escalations
 			if unacked > 0:
 				setColor(colors[0])
-				print("Red")
+				print(str(int(time.time())) + " Red")
 			else:
 				setColor(colors[6])
-				print("White")
+				print(str(int(time.time())) + " White")
 			time.sleep(10.0)
 
 if __name__ == '__main__':
