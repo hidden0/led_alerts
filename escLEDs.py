@@ -160,7 +160,7 @@ def main():
 
 			# Set lighting accordingly
 			if lights['personal']==True:
-				setColor(colors['green'])
+				setColor(colors['yellow'])
 				time.sleep(3)
 			if lights['neha']==True:
 				setColor(colors['blue'])
@@ -169,7 +169,7 @@ def main():
 				setColor(colors['red'])
 				time.sleep(1)
 			if lights['personal']==False and lights['escalation']==False and lights['neha']==False:
-				setColor(colors['navy'])
+				setColor(colors['green'])
 				time.sleep(1)
 			time.sleep(15.0)
 
