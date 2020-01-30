@@ -171,7 +171,7 @@ def main():
 			if lights['personal']==False and lights['escalation']==False and lights['neha']==False:
 				setColor(colors['navy'])
 				time.sleep(1)
-			time.sleep(5.0)
+			time.sleep(15.0)
 
 if __name__ == '__main__':
 	main()
