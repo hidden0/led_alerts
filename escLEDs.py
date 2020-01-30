@@ -147,7 +147,7 @@ def main():
 				y+=1
 
 			# Check unacked escalations
-			print (str(len(emailsP)))
+			#print (str(len(emailsP)))
 			if unacked > 0:
 				lights['escalation']=True
 				print(str(int(time.time())) + " Escalation")
@@ -167,6 +167,9 @@ def main():
 				time.sleep(3)
 			if lights['escalation']==True:
 				setColor(colors['red'])
+				time.sleep(1)
+			if lights['personal']==False and lights['escalation']==False and lights['neha']==False:
+				setColor(colors['navy'])
 				time.sleep(1)
 			time.sleep(5.0)
 
