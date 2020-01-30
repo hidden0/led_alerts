@@ -147,7 +147,7 @@ def main():
 				y+=1
 
 			# Check unacked escalations
-			print len(emailsP)
+			print (str(len(emailsP)))
 			if unacked > 0:
 				lights['escalation']=True
 				print(str(int(time.time())) + " Escalation")
