@@ -60,7 +60,7 @@ roomId = (f.read())
 f.close()
 
 fullQuery = apiUrl + apiAction + params
-ans = requests.post(fullQuery, headers={'Authorization': 'BEARER ' +str(daveToken) })
+ans = requests.post(fullQuery, headers={'Authorization': 'BEARER ' +str(daveToken).rstrip() })
 
 print(ans.text)
 exit()
