@@ -35,6 +35,7 @@ rVal = 100
 gVal = 1
 bVal = 1
 x = 1
+rValMod = 1
 
 try:
 	#we are starting with the loop
@@ -45,7 +46,11 @@ try:
 		#lighting up the pins. 100 means giving 100% to the pin
 
 		#For anode RGB LED users, if you want to start with RED too the only thing to be done is defining RED as one and GREEN and BLUE as 100.
-		rVal = rVal - x
+		rVal = rVal - (x * rValMod)
+		if rVal < 0:
+			rValMod = -1
+		if rVal > 100:
+			rValMod = 1
 		RED.ChangeDutyCycle(rVal)
 		GREEN.ChangeDutyCycle(gVal)
 		BLUE.ChangeDutyCycle(bVal)
