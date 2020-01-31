@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 #importing the library for delaying command.
 import time
 import requests
+import re
 import json
 import sys
 
@@ -66,7 +67,10 @@ r = requests.get('https://api.ciscospark.com/v1/messages?roomId=Y2lzY29zcGFyazov
 json_data = json.loads(r.text)
 
 for item in json_data['items']:
-	print(item)
+	message = item['text']
+	regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
+	matches = re.finditer(regex, test_str, re.MULTILINE)
+	print(str(matches.group(0)))
 exit()
 try:
 	#we are starting with the loop
