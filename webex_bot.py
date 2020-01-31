@@ -97,7 +97,7 @@ try:
 		selectedColor = colors['green']
 
 		for item in json_data['items']:
-			message = item['text']
+			message = item['text'].lower()
 			print(message)
 			regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
 
@@ -105,7 +105,7 @@ try:
 
 			for matchNum, match in enumerate(matches, start=1):
 				#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
-				setColor(colors[(match.group(0).lower())])
+				setColor(colors[(match.group(0))])
 
 		time.sleep(5)
 
