@@ -4,6 +4,8 @@ import RPi.GPIO as GPIO
 
 #importing the library for delaying command.
 import time
+import requests
+import sys
 
 #used for GPIO numbering
 GPIO.setmode(GPIO.BCM)
@@ -37,6 +39,31 @@ bVal = 100
 x = 1
 rValMod = 1
 
+# Setup Webex bot listeners
+# First arg should be token, second id
+daveToken = ""
+daveId = ""
+roomId = ""
+apiUrl = "https://api.ciscospark.com/v1/"
+apiAction = "messages"
+params = "?roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYmJjZWIxYWQtNDNmMS0zYjU4LTkxNDctZjE0YmIwYzRkMTU0&mentionedPeople=Y2lzY29zcGFyazovL3VzL1BFT1BMRS8yNDlmNzRkOS1kYjhhLTQzY2EtODk2Yi04NzllZDI0MGFjNTM&before=2016-04-21T19:01:55.966Z&beforeMessage=Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk&max=100"
+
+
+f = open(sys.argv[1], "r")
+daveToken = (f.read())
+f.close()
+f = open(sys.argv[2], "r")
+daveId = (f.read())
+f.close()
+f = open(sys.argv[3], "r")
+roomId = (f.read())
+f.close()
+
+fullQuery = apiUrl + apiAction + params
+ans = requests.post(fullQuery)
+
+print(ans.text)
+exit()
 try:
 	#we are starting with the loop
 	RED.start(1)
