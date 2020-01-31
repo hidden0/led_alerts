@@ -24,7 +24,7 @@ GPIO.setup(green, GPIO.OUT)
 GPIO.setup(blue, GPIO.OUT)
 
 #choosing a frequency for pwm
-Freq = 100
+Freq = 1000
 
 #defining the pins that are going to be used with PWM
 RED = GPIO.PWM(red, Freq)
