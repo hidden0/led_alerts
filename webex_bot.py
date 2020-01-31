@@ -46,16 +46,10 @@ try:
 		#lighting up the pins. 100 means giving 100% to the pin
 
 		#For anode RGB LED users, if you want to start with RED too the only thing to be done is defining RED as one and GREEN and BLUE as 100.
-		rVal = rVal - (1 * rValMod)
-		if rVal < 0:
-			rValMod = -1
-			rVal = 0
-		if rVal > 100:
-			rValMod = 1
-			rVal = 100
-		RED.ChangeDutyCycle(rVal)
-		GREEN.ChangeDutyCycle(gVal)
-		BLUE.ChangeDutyCycle(bVal)
+		for x in range(1,100):
+			RED.ChangeDutyCycle(x)
+			GREEN.ChangeDutyCycle(101-x)
+			BLUE.ChangeDutyCycle(0)
 		time.sleep(0.005)
 
 except KeyboardInterrupt:
