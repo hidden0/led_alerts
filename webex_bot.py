@@ -31,9 +31,9 @@ RED = GPIO.PWM(red, Freq)
 GREEN = GPIO.PWM(green, Freq)
 BLUE = GPIO.PWM(blue, Freq)
 
-rVal = 101.0
-gVal = 101.0
-bVal = 101.0
+rVal = 100
+gVal = 100
+bVal = 100
 x = 1
 
 try:
@@ -49,11 +49,11 @@ try:
 		gVal = gVal-x-x-x
 		bVal = bVal-x
 		if rVal < 0:
-			rVal = 101
+			rVal = 100
 		if gVal < 0:
-			gVal = 101
+			gVal = 100
 		if bVal < 0:
-			bVal = 101
+			bVal = 100
 
 		RED.ChangeDutyCycle(rVal)
 		GREEN.ChangeDutyCycle(gVal)
