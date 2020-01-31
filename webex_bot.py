@@ -1,49 +1,68 @@
 #!/usr/bin/env python
+#defining the RPi's pins as Input / Output
 import RPi.GPIO as GPIO
+
+#importing the library for delaying command.
 import time
-import sys
 
-colorTest = int(sys.argv[1])
-colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xFFFFFF, 0x9400D3]
-pins = {'pin_R':5, 'pin_G':6, 'pin_B':13}  # pins is a dict
+#used for GPIO numbering
+GPIO.setmode(GPIO.BCM)
 
-GPIO.setmode(GPIO.BCM)       # Numbers GPIOs by physical location
-for i in pins:
-	GPIO.setup(pins[i], GPIO.OUT)   # Set pins' mode is output
-	GPIO.output(pins[i], GPIO.HIGH) # Set pins to high(+3.3V) to off led
+#closing the warnings when you are compiling the code
+GPIO.setwarnings(False)
 
-print ("Freuency 1 KHz")
-p_R = GPIO.PWM(pins['pin_R'], 100)  # set Frequece to 2KHz
-p_G = GPIO.PWM(pins['pin_G'], 100)
-p_B = GPIO.PWM(pins['pin_B'], 100)
+RUNNING = True
 
-p_R.start(0)      # Initial duty Cycle = 0(leds off)
-p_G.start(0)
-p_B.start(0)
+#defining the pins
+green = 6
+red = 5
+blue = 13
 
-def map(x, in_min, in_max, out_min, out_max):
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+#defining the pins as output
+GPIO.setup(red, GPIO.OUT)
+GPIO.setup(green, GPIO.OUT)
+GPIO.setup(blue, GPIO.OUT)
 
-def setColor(col):   # For example : col = 0x112233
-	R_val = (col & 0x110000) >> 16
-	G_val = (col & 0x001100) >> 8
-	B_val = (col & 0x000011) >> 0
+#choosing a frequency for pwm
+Freq = 100
 
-	R_val = map(R_val, 0, 255, 0, 100)
-	G_val = map(G_val, 0, 255, 0, 100)
-	B_val = map(B_val, 0, 255, 0, 100)
-
-	p_R.ChangeDutyCycle(100-R_val)     # Change duty cycle
-	p_G.ChangeDutyCycle(100-G_val)
-	p_B.ChangeDutyCycle(100-B_val)
+#defining the pins that are going to be used with PWM
+RED = GPIO.PWM(red, Freq)
+GREEN = GPIO.PWM(green, Freq)
+BLUE = GPIO.PWM(blue, Freq)
 
 try:
-	setColor(colors[colorTest])
-	time.sleep(5.0)
-except KeyboardInterrupt:
-	p_R.stop()
-	p_G.stop()
-	p_B.stop()
-	for i in pins:
-		GPIO.output(pins[i], GPIO.HIGH)    # Turn off all leds
-	GPIO.cleanup()
+	#we are starting with the loop
+	while RUNNING:
+		#lighting up the pins. 100 means giving 100% to the pin
+		RED.start(100)
+		GREEN.start(1)
+		BLUE.start(1)
+		#For anode RGB LED users, if you want to start with RED too the only thing to be done is defining RED as one and GREEN and BLUE as 100.
+
+			for x in range(1,101):
+				# for changing the width of PWM, this command is used
+				GREEN.ChangeDutyCycle(x)
+ 				#for anode LED users, just change x with 101-x
+
+				# and for delay time.sleep is used. You can chance the duration of the colors with changing the time from here
+				time.sleep(0.05)
+
+			for x in range(1,101):
+
+				RED.ChangeDutyCycle(101-x)
+				time.sleep(0.025)
+
+			for x in range(1,101)
+				GREEN.ChangeDutyCycle(101-x)
+				BLUE.ChangeDutyCycle(x)
+				time.sleep(0.025)
+
+			for x in range(1,101):
+				RED.ChangeDutyCycle(x)
+				time.sleep(0.025)
+
+	except KeyboardInterrupt:
+		# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
+		RUNNING = False
+		GPIO.cleanup()
