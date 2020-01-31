@@ -32,8 +32,8 @@ GREEN = GPIO.PWM(green, Freq)
 BLUE = GPIO.PWM(blue, Freq)
 
 rVal = 100
-gVal = 0
-bVal = 0
+gVal = 1
+bVal = 1
 x = 1
 
 try:
