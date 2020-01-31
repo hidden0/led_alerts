@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 #importing the library for delaying command.
 import time
 import requests
+import json
 import sys
 
 #used for GPIO numbering
@@ -62,7 +63,10 @@ f.close()
 fullQuery = apiUrl + apiAction + params
 m = {'roomId': roomId.rstrip(), 'mentionedPeople': daveId.rstrip()}
 r = requests.get('https://api.ciscospark.com/v1/messages?roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYjk4MWU5NzAtNDQ3Ni0xMWVhLWI2YjctMTEzZjlmN2YyOTQy&mentionedPeople=me', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
-print(r.text)
+json_data = json.loads(r.text)
+
+for item in json_data['items']:
+	print(item)
 exit()
 try:
 	#we are starting with the loop
