@@ -5,7 +5,7 @@ import sys
 
 colorTest = int(sys.argv[1])
 colors = [0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xFFFFFF, 0x9400D3]
-pins = {'pin_R':13, 'pin_G':6, 'pin_B':5}  # pins is a dict
+pins = {'pin_R':5, 'pin_G':6, 'pin_B':13}  # pins is a dict
 
 GPIO.setmode(GPIO.BCM)       # Numbers GPIOs by physical location
 for i in pins:
