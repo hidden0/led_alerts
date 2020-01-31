@@ -107,7 +107,7 @@ try:
 				#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
 				setColor(colors[(match.group(0))])
 
-		time.sleep(2)
+		time.sleep(5)
 
 except KeyboardInterrupt:
 	# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
