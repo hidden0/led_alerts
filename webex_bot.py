@@ -31,10 +31,10 @@ RED = GPIO.PWM(red, Freq)
 GREEN = GPIO.PWM(green, Freq)
 BLUE = GPIO.PWM(blue, Freq)
 
-rVal = 101
-gVal = 101
-bVal = 101
-x = 0
+rVal = 101.0
+gVal = 101.0
+bVal = 101.0
+x = 1
 
 try:
 	#we are starting with the loop
@@ -60,7 +60,7 @@ try:
 		BLUE.ChangeDutyCycle(bVal)
 		x+=1
 		if x > 100:
-			x = 0
+			x = 1
 		time.sleep(0.05)
 
 except KeyboardInterrupt:
