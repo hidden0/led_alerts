@@ -95,7 +95,7 @@ try:
 		r = requests.get('https://api.ciscospark.com/v1/messages?max=1&roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYjk4MWU5NzAtNDQ3Ni0xMWVhLWI2YjctMTEzZjlmN2YyOTQy&mentionedPeople=me', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
 		json_data = json.loads(r.text)
 		selectedColor = colors['green']
-		if not json_data['items']:
+		if not json_data:
 			time.sleep(1)
 		else:
 			for item in json_data['items']:
