@@ -9,6 +9,9 @@ import re
 import json
 import sys
 
+# colors
+colors = { 'red':0xFF0000, 'green':0x00FF00, 'blue':0x0000FF, 'yellow':0xFFFF00, 'teal':0x00FFFF, 'purple':0xFF00FF, 'white':0xFFFFFF, 'navy':0x9400D3 }
+
 #used for GPIO numbering
 GPIO.setmode(GPIO.BCM)
 
@@ -34,6 +37,24 @@ Freq = 1000
 RED = GPIO.PWM(red, Freq)
 GREEN = GPIO.PWM(green, Freq)
 BLUE = GPIO.PWM(blue, Freq)
+
+def map(x, in_min, in_max, out_min, out_max):
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
+def setColor(col):   # For example : col = 0x112233
+	R_val = (col & 0x110000) >> 16
+	G_val = (col & 0x001100) >> 8
+	B_val = (col & 0x000011) >> 0
+
+	R_val = map(R_val, 0, 255, 0, 100)
+	G_val = map(G_val, 0, 255, 0, 100)
+	B_val = map(B_val, 0, 255, 0, 100)
+
+	RED.ChangeDutyCycle(100-R_val)     # Change duty cycle
+	GREEN.ChangeDutyCycle(100-G_val)
+	BLUE.ChangeDutyCycle(100-B_val)
+
+
 
 rVal = 1
 gVal = 100
@@ -63,25 +84,7 @@ f.close()
 
 fullQuery = apiUrl + apiAction + params
 m = {'roomId': roomId.rstrip(), 'mentionedPeople': daveId.rstrip()}
-r = requests.get('https://api.ciscospark.com/v1/messages?max=1&roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYjk4MWU5NzAtNDQ3Ni0xMWVhLWI2YjctMTEzZjlmN2YyOTQy&mentionedPeople=me', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
-json_data = json.loads(r.text)
-selectedColor = "green"
 
-for item in json_data['items']:
-	message = item['text']
-	print(message)
-	regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
-
-	matches = re.finditer(regex, message, re.MULTILINE)
-
-	for matchNum, match in enumerate(matches, start=1):
-		#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
-		print (match.group(0))
-		"""for groupNum in range(0, len(match.groups())):
-			groupNum = groupNum + 1
-
-			print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum = groupNum, start = match.start(groupNum), end = match.end(groupNum), group = match.group(groupNum)))"""
-exit()
 try:
 	#we are starting with the loop
 	RED.start(1)
@@ -89,14 +92,21 @@ try:
 	BLUE.start(1)
 	while RUNNING:
 		#lighting up the pins. 100 means giving 100% to the pin
+		r = requests.get('https://api.ciscospark.com/v1/messages?max=1&roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYjk4MWU5NzAtNDQ3Ni0xMWVhLWI2YjctMTEzZjlmN2YyOTQy&mentionedPeople=me', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
+		json_data = json.loads(r.text)
+		selectedColor = colors['green']
 
-		#For anode RGB LED users, if you want to start with RED too the only thing to be done is defining RED as one and GREEN and BLUE as 100.
-		for x in range(1,100):
-			RED.ChangeDutyCycle(x)
-			GREEN.ChangeDutyCycle(101-x)
-			BLUE.ChangeDutyCycle(1)
-			time.sleep(0.05)
-		time.sleep(0.005)
+		for item in json_data['items']:
+			message = item['text']
+			print(message)
+			regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
+
+			matches = re.finditer(regex, message, re.MULTILINE)
+
+			for matchNum, match in enumerate(matches, start=1):
+				#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
+				selectedColor = colors[(match.group(0))]
+		time.sleep(2)
 
 except KeyboardInterrupt:
 	# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
