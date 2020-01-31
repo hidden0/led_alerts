@@ -32,8 +32,8 @@ GREEN = GPIO.PWM(green, Freq)
 BLUE = GPIO.PWM(blue, Freq)
 
 rVal = 100
-gVal = 100
-bVal = 100
+gVal = 0
+bVal = 0
 x = 1
 
 try:
@@ -46,23 +46,13 @@ try:
 
 		#For anode RGB LED users, if you want to start with RED too the only thing to be done is defining RED as one and GREEN and BLUE as 100.
 
-		rVal = rVal-x-x
-		gVal = gVal-x-x-x
-		bVal = bVal-x
-		if rVal < 0:
-			rVal = 100
-		if gVal < 0:
-			gVal = 100
-		if bVal < 0:
-			bVal = 100
-
-		RED.ChangeDutyCycle(rVal)
+		RED.ChangeDutyCycle(rVal-x)
 		GREEN.ChangeDutyCycle(gVal)
 		BLUE.ChangeDutyCycle(bVal)
 		x+=1
 		if x > 100:
 			x = 1
-		time.sleep(0.5)
+		time.sleep(0.05)
 
 except KeyboardInterrupt:
 	# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
