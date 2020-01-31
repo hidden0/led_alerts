@@ -56,7 +56,7 @@ try:
 		RED.ChangeDutyCycle(rVal)
 		GREEN.ChangeDutyCycle(gVal)
 		BLUE.ChangeDutyCycle(bVal)
-		time.sleep(0.05)
+		time.sleep(0.005)
 
 except KeyboardInterrupt:
 	# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
