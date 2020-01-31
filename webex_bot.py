@@ -49,8 +49,10 @@ try:
 		rVal = rVal - (x * rValMod)
 		if rVal < 0:
 			rValMod = -1
+			rVal = 0
 		if rVal > 100:
 			rValMod = 1
+			rVal = 100
 		RED.ChangeDutyCycle(rVal)
 		GREEN.ChangeDutyCycle(gVal)
 		BLUE.ChangeDutyCycle(bVal)
