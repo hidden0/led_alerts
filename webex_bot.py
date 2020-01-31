@@ -5,7 +5,6 @@ import RPi.GPIO as GPIO
 #importing the library for delaying command.
 import time
 import requests
-from requests_toolbelt.multipart.encoder import MultipartEncoder
 import sys
 
 #used for GPIO numbering
@@ -61,8 +60,8 @@ roomId = (f.read())
 f.close()
 
 fullQuery = apiUrl + apiAction + params
-m = MultipartEncoder({'roomId': roomId.rstrip(), 'mentionedPeople': daveId.rstrip()})
-r = requests.post('https://api.ciscospark.com/v1/messages', data=m, headers={'Authorization': 'Bearer '+str(daveToken).rstrip(),'Content-Type': m.content_type})
+m = {'roomId': roomId.rstrip(), 'mentionedPeople': daveId.rstrip()}
+r = requests.post('https://api.ciscospark.com/v1/messages', data=m, headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
 print(r.text)
 exit()
 try:
