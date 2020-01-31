@@ -49,7 +49,8 @@ try:
 		for x in range(1,100):
 			RED.ChangeDutyCycle(x)
 			GREEN.ChangeDutyCycle(101-x)
-			BLUE.ChangeDutyCycle(0)
+			BLUE.ChangeDutyCycle(1)
+			time.sleep(0.05)
 		time.sleep(0.005)
 
 except KeyboardInterrupt:
