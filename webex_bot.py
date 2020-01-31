@@ -95,17 +95,19 @@ try:
 		r = requests.get('https://api.ciscospark.com/v1/messages?max=1&roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYjk4MWU5NzAtNDQ3Ni0xMWVhLWI2YjctMTEzZjlmN2YyOTQy&mentionedPeople=me', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
 		json_data = json.loads(r.text)
 		selectedColor = colors['green']
+		if not json_data['items']:
+			time.sleep(1)
+		else:
+			for item in json_data['items']:
+				message = item['text'].lower()
+				print(message)
+				regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
 
-		for item in json_data['items']:
-			message = item['text'].lower()
-			print(message)
-			regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
+				matches = re.finditer(regex, message, re.MULTILINE)
 
-			matches = re.finditer(regex, message, re.MULTILINE)
-
-			for matchNum, match in enumerate(matches, start=1):
-				#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
-				setColor(colors[(match.group(0))])
+				for matchNum, match in enumerate(matches, start=1):
+					#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
+					setColor(colors[(match.group(0))])
 
 		time.sleep(5)
 
