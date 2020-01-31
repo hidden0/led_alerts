@@ -53,7 +53,7 @@ try:
 			RED.ChangeDutyCycle(101-x)
 			time.sleep(0.025)
 
-		for x in range(1,101)
+		for x in range(1,101:
 			GREEN.ChangeDutyCycle(101-x)
 			BLUE.ChangeDutyCycle(x)
 			time.sleep(0.025)
