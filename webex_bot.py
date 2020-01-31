@@ -70,7 +70,7 @@ for item in json_data['items']:
 	message = item['text']
 	print(message)
 	matches = re.match(r"\b(?:red|blue|green|yellow|orange|purple|white)\b", message)
-	if not matches
+	if not matches:
 		continue
 	print(matches)
 	print(str(matches.group(0)))
