@@ -38,11 +38,12 @@ x = 1
 
 try:
 	#we are starting with the loop
+	RED.start(1)
+	GREEN.start(1)
+	BLUE.start(1)
 	while RUNNING:
 		#lighting up the pins. 100 means giving 100% to the pin
-		RED.start(1)
-		GREEN.start(1)
-		BLUE.start(1)
+
 		#For anode RGB LED users, if you want to start with RED too the only thing to be done is defining RED as one and GREEN and BLUE as 100.
 
 		rVal = rVal-x-x
@@ -61,7 +62,7 @@ try:
 		x+=1
 		if x > 100:
 			x = 1
-		time.sleep(0.05)
+		time.sleep(0.5)
 
 except KeyboardInterrupt:
 	# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
