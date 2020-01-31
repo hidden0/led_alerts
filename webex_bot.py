@@ -69,7 +69,7 @@ json_data = json.loads(r.text)
 for item in json_data['items']:
 	message = item['text']
 	regex = r"\b(?:red|blue|green|yellow|orange|purple|white)\b"
-	matches = re.finditer(regex, message, re.MULTILINE)
+	matches = re.match(regex, message)
 	print(str(matches.group(0)))
 exit()
 try:
