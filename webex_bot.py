@@ -68,8 +68,7 @@ json_data = json.loads(r.text)
 
 for item in json_data['items']:
 	message = item['text']
-	regex = "\b(?:red|blue|green|yellow|orange|purple|white)\b"
-	matches = re.match(regex, message)
+	matches = re.match(r"\b(?:red|blue|green|yellow|orange|purple|white)\b", message)
 	print(matches)
 	print(str(matches.group(0)))
 exit()
