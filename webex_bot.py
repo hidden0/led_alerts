@@ -105,7 +105,7 @@ try:
 
 			for matchNum, match in enumerate(matches, start=1):
 				#print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
-				setColor(colors[(match.group(0))])
+				setColor(colors[(match.group(0).lower())])
 
 		time.sleep(5)
 
