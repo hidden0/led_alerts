@@ -31,9 +31,9 @@ RED = GPIO.PWM(red, Freq)
 GREEN = GPIO.PWM(green, Freq)
 BLUE = GPIO.PWM(blue, Freq)
 
-rVal = 100
-gVal = 1
-bVal = 1
+rVal = 1
+gVal = 100
+bVal = 100
 x = 1
 rValMod = 1
 
