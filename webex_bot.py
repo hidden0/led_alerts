@@ -62,7 +62,7 @@ try:
 			RED.ChangeDutyCycle(x)
 			time.sleep(0.025)
 
-	except KeyboardInterrupt:
-		# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
-		RUNNING = False
-		GPIO.cleanup()
+except KeyboardInterrupt:
+	# the purpose of this part is, when you interrupt the code, it will stop the while loop and turn off the pins, which means your LED won't light anymore
+	RUNNING = False
+	GPIO.cleanup()
