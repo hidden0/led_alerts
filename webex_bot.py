@@ -61,7 +61,7 @@ f.close()
 
 fullQuery = apiUrl + apiAction + params
 m = {'roomId': roomId.rstrip(), 'mentionedPeople': daveId.rstrip()}
-r = requests.get('https://api.ciscospark.com/v1/messages?roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYmJjZWIxYWQtNDNmMS0zYjU4LTkxNDctZjE0YmIwYzRkMTU0&mentionedPeople=Y2lzY29zcGFyazovL3VzL1BFT1BMRS8yNDlmNzRkOS1kYjhhLTQzY2EtODk2Yi04NzllZDI0MGFjNTM&before=2016-04-21T19:01:55.966Z&beforeMessage=Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTJkYjNiZTAtNDNiZC0xMWU2LThhZTktZGQ1YjNkZmM1NjVk&max=100', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
+r = requests.get('https://api.ciscospark.com/v1/messages?roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYjk4MWU5NzAtNDQ3Ni0xMWVhLWI2YjctMTEzZjlmN2YyOTQy&mentionedPeople=Y2lzY29zcGFyazovL3VzL0FQUExJQ0FUSU9OLzdjOWRmYzU0LTJmZTYtNGU0Ny1hZjQ4LTNkYmRmYjYyODA0Yg', headers={'Authorization': 'Bearer '+str(daveToken).rstrip()})
 print(r.text)
 exit()
 try:
